@@ -8,69 +8,38 @@ import Button from "../components/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
-    width: "100vw",
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
-    backgroundSize: "cover",
-    backgroundPosition: "center",
     display: "flex",
-    flexDirection: "column",
+    minWidth: "100vw",
+    minHeight: "100vh",
     alignItems: "center",
+    flexDirection: "column",
+    backgroundSize: "cover",
     justifyContent: "center",
+    backgroundColor: "#f5f7fb",
+    backgroundPosition: "center",
   },
   header: {
-    color: "#fff",
     fontSize: 26,
-    fontWeight: "bold",
-  },
-  subHeading: {
-    color: "#fff",
-    fontSize: 16,
     marginBottom: 40,
+    fontWeight: "bold",
+    color: theme.palette.primary.main,
   },
   form: {
     width: 280,
     display: "flex",
-    flexDirection: "column",
     alignItems: "center",
+    flexDirection: "column",
     justifyContent: "center",
   },
   formItem: {
     width: "100%",
     margin: "10px 0",
   },
-  icon: {
-    color: "#fff",
-    height: 20,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  submitButton: {
-    width: "100%",
-    margin: "30px 0 20px 0",
-  },
-  forgotText: {
-    color: "#7D76BA",
+  smallText: {
     fontSize: 10,
     margin: "5px 0",
     textDecoration: "none",
-  },
-  forgotTextWhite: {
-    color: "#FFF",
-    fontSize: 10,
-    margin: "5px 0",
-    textDecoration: "none",
-  },
-  forgotRow: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    color: theme.palette.primary.main,
   },
 }));
 
@@ -93,14 +62,14 @@ export default function Login(props) {
         setLoading(false);
       }
     } catch (err) {
-      console.log("Error Login", err);
+      setLoading(false);
     }
   };
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.header}>Forgot Password</Typography>
-      <Typography className={classes.subHeading}>
+      <Typography className={classes.header}>Forgot Password ?</Typography>
+      <Typography className={classes.smallText}>
         Enter your email to reset password
       </Typography>
       <div className={classes.form}>
@@ -108,8 +77,8 @@ export default function Login(props) {
           <Input
             type="email"
             name="email"
-            placeholder="Nom d’utilisateur"
             value={values.email}
+            placeholder="E-mail address"
             onChange={(event) => {
               const re = /^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/;
               if (!re.test(String(event.target.value).toLowerCase())) {
@@ -122,21 +91,19 @@ export default function Login(props) {
             error={errors.email && "Something"}
           />
         </div>
-        <div className={classes.submitButton}>
+        <div className={classes.formItem}>
           <Button
             type="submit"
-            text={loading ? "Loading..." : "Submit"}
             onClick={onSubmit}
             disabled={loading}
+            text={loading ? "Loading..." : "Submit"}
           />
         </div>
-      </div>
-      <div className={classes.forgotRow}>
-        <div className={classes.forgotText}>Vous ave d j un compte ?</div>
-        &nbsp;&nbsp;&nbsp;
-        <Link to="/" className={classes.forgotTextWhite}>
-          Conne ion
-        </Link>
+        <div className={classes.formItem}>
+          <Link to="/" className={classes.smallText}>
+            Or Login
+          </Link>
+        </div>
       </div>
     </div>
   );

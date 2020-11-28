@@ -6,7 +6,10 @@ import Footer from "../../components/Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#F5F7FB",
+    backgroundColor: "#FFF",
+  },
+  content: {
+    minHeight: "80vh",
   },
 }));
 

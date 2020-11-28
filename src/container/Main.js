@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as actionTypes from "../store/actions/actionTypes";
+
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PasswordForgot from "../pages/PasswordForgot";
@@ -10,10 +11,12 @@ import PasswordForgot from "../pages/PasswordForgot";
 // User
 import Profile from "../pages/User/Profile";
 
+import Loader from "../components/Loader";
+
 const LFS = () => {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
     checkLogin();
@@ -22,9 +25,8 @@ const LFS = () => {
 
   const checkLogin = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const userId = localStorage.getItem("userId");
-      if (!userId || !token) {
+      const token = localStorage.getItem("test");
+      if (!token) {
         setLoading(false);
         return;
       }
@@ -39,12 +41,14 @@ const LFS = () => {
       // );
       // if (!response.ok) throw response;
       // const data = await response.json();
-      dispatch({
-        type: actionTypes.LOGIN,
-        user: "",
-        token: "",
-      });
-      setLoading(false);
+      setTimeout(() => {
+        dispatch({
+          type: actionTypes.LOGIN,
+          user: "user",
+          token: "token",
+        });
+        setLoading(false);
+      }, 1000);
     } catch (err) {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
@@ -53,7 +57,7 @@ const LFS = () => {
   };
 
   return loading ? (
-    <div>Loading...</div>
+    <Loader.CenterProgress />
   ) : store.auth ? (
     <Switch>
       <Route exact path="/" component={Profile} />

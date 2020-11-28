@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: 50,
+    height: 50,
     backgroundColor: "#f5f7fb",
   },
   nav: {
@@ -17,9 +16,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   link: {
-    color: "#000",
     fontSize: 12,
-    fontWeight: "light",
+    color: "#000",
     margin: "0 12px",
     textDecoration: "none",
   },
@@ -30,22 +28,20 @@ export default function Login(props) {
 
   return (
     <div className={classes.root}>
-      <Container maxWidth="xl">
-        <nav className={classes.nav}>
-          <Link className={classes.link} to="/product">
-            Product
-          </Link>
-          <Link className={classes.link} to="/pricing">
-            Pricing
-          </Link>
-          <Link className={classes.link} to="/contacts">
-            Contacts
-          </Link>
-          <Link className={classes.link} to="/team">
-            Team
-          </Link>
-        </nav>
-      </Container>
+      <nav className={classes.nav}>
+        <Link className={classes.link} to="/product">
+          Product
+        </Link>
+        <Link className={classes.link} to="/pricing">
+          Pricing
+        </Link>
+        <Link className={classes.link} to="/contacts">
+          Contacts
+        </Link>
+        <Link className={classes.link} to="/team">
+          Team
+        </Link>
+      </nav>
     </div>
   );
 }

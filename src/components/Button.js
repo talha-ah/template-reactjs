@@ -10,7 +10,7 @@ export default function Button(props) {
       alignItems: "center",
       justifyContent: "center",
       overflow: "hidden",
-      backgroundColor: "#4DA1FF",
+      backgroundColor: theme.palette.secondary.main,
       borderRadius: 4,
       transition: "background-color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
       padding: 14,
@@ -20,8 +20,8 @@ export default function Button(props) {
       border: 0,
       outline: 0,
       cursor: "pointer",
-      // boxShadow:
-      //   "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
+      boxShadow:
+        "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
       "&:hover": {
         opacity: 0.8,
       },
