@@ -14,8 +14,12 @@ export default function Input(props) {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      color: props.error ? "red" : theme.palette.common.white,
-      borderColor: props.error ? "red" : theme.palette.primary.main,
+      color: props.error
+        ? theme.palette.error.main
+        : theme.palette.primary.contrastText,
+      borderColor: props.error
+        ? theme.palette.error.main
+        : theme.palette.primary.main,
       backgroundColor: props.color ? props.color : theme.palette.primary.main,
       transition: "background-color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
       boxShadow:
@@ -35,13 +39,17 @@ export default function Input(props) {
       height: "100%",
       padding: "14px 12px",
       backgroundColor: "transparent",
-      color: props.error ? "red" : theme.palette.common.white,
+      color: props.error
+        ? theme.palette.error.main
+        : theme.palette.primary.contrastText,
       "&::placeholder": {
-        color: props.error ? "red" : theme.palette.common.white,
+        color: props.error
+          ? theme.palette.error.main
+          : theme.palette.primary.contrastText,
       },
     },
     error: {
-      color: "red",
+      color: theme.palette.error.main,
       fontSize: 12,
       fontWeight: 400,
     },

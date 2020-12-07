@@ -6,10 +6,16 @@ import Footer from "../../components/Footer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#FFF",
+    height: "100vh",
+    backgroundColor: theme.palette.common.white,
   },
   content: {
-    minHeight: "80vh",
+    display: "flex",
+    padding: "20px 10px",
+    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    height: "calc(100vh - 64px - 64px)",
   },
 }));
 
@@ -19,7 +25,9 @@ const Profile = (props) => {
   return (
     <div className={classes.root}>
       <Header />
-      <div className={classes.content}>Profile</div>
+      <div className={classes.content}>
+        <Heading text="Main Page" />
+      </div>
       <Footer />
     </div>
   );

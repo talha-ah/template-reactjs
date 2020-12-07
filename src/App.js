@@ -22,6 +22,28 @@ const theme = createMuiTheme({
       xl: 1199,
     },
   },
+  palette: {
+    primary: {
+      light: "#eef0f3",
+      main: "#242a31",
+      dark: "#1d232a",
+      contrastText: "#a0a4a7",
+    },
+    secondary: {
+      light: "#363d45",
+      main: "#0084ff",
+      dark: "#3c4249",
+      contrastText: "#fff",
+    },
+    divider: {
+      light: "#cfd2d7",
+      main: "#363d44",
+    },
+    text: {
+      main: "#a0a4a7",
+      icon: "#81868c",
+    },
+  },
 });
 
 const App = () => {

@@ -16,34 +16,40 @@ import * as actionTypes from "../store/actions/actionTypes";
 
 import Logo from "../assets/images/Logo.svg";
 import ProfileImage from "../assets/images/Profile.jpg";
+import SmallText from "../components/SmallText";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: 64,
     backgroundColor: "#fff",
   },
   toolBar: {
-    minHeight: 64,
-    backgroundColor: "#fff",
+    margin: 0,
+    padding: 0,
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 0,
-    margin: 0,
+    backgroundColor: theme.palette.common.white,
+  },
+  nav: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    "& > *": {
+      margin: "0 15px",
+    },
   },
   logo: {
     height: 35,
   },
-  link: {
-    color: "#000",
-    fontSize: 12,
-    fontWeight: "light",
-    margin: "0 12px",
-    textDecoration: "none",
-  },
   profile: {
     display: "flex",
+    cursor: "pointer",
     flexDirection: "row",
     alignItems: "center",
-    cursor: "pointer",
   },
   profileImage: {
     width: 20,
@@ -52,8 +58,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 10,
   },
   profileName: {
-    color: "#000",
     fontSize: 10,
+    color: "#000",
     fontWeight: "bold",
     textDecoration: "none",
   },
@@ -72,6 +78,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Login(props) {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const store = useSelector((state) => state);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [drawer, setDrawer] = React.useState(false);
 
@@ -92,22 +100,15 @@ export default function Login(props) {
       <Container maxWidth="xl">
         <Toolbar className={classes.toolBar}>
           <Hidden smDown>
-            <Link to="/">
-              <img src={Logo} className={classes.logo} alt="Logo" />
-            </Link>
-            <nav>
-              <Link className={classes.link} to="/product">
-                Product
-              </Link>
-              <Link className={classes.link} to="/pricing">
-                Pricing
-              </Link>
-              <Link className={classes.link} to="/contacts">
-                Contacts
-              </Link>
-              <Link className={classes.link} to="/team">
-                Team
-              </Link>
+            <SmallText
+              to="/"
+              text={<img src={Logo} className={classes.logo} alt="Logo" />}
+            />
+            <nav className={classes.nav}>
+              <SmallText to="/product" text="Product" />
+              <SmallText to="/pricing" text="Pricing" />
+              <SmallText to="/contacts" text="Contacts" />
+              <SmallText to="/team" text=" Team" />
             </nav>
           </Hidden>
           <Hidden mdUp>
@@ -146,7 +147,10 @@ export default function Login(props) {
                 alt="profileImage"
                 className={classes.profileImage}
               />
-              <span className={classes.profileName}>Anne-Gabrielle</span>
+              <SmallText
+                bold
+                text={store.user.firstName + " " + store.user.lastName}
+              />
             </div>
             <Menu
               id="simple-menu"

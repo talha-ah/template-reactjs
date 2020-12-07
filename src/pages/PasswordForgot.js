@@ -1,10 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 
+import Form from "../components/Form";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Loader from "../components/Loader";
+import Heading from "../components/Heading";
+import SmallText from "../components/SmallText";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,32 +20,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f5f7fb",
     backgroundPosition: "center",
   },
-  header: {
-    fontSize: 26,
-    marginBottom: 40,
-    fontWeight: "bold",
-    color: theme.palette.primary.main,
-  },
-  form: {
-    width: 280,
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  formItem: {
-    width: "100%",
-    margin: "10px 0",
-  },
-  smallText: {
-    fontSize: 10,
-    margin: "5px 0",
-    textDecoration: "none",
-    color: theme.palette.primary.main,
-  },
 }));
 
-export default function Login(props) {
+export default function PasswordForgot(props) {
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
   const [values, setValues] = React.useState({
@@ -68,12 +47,10 @@ export default function Login(props) {
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.header}>Forgot Password ?</Typography>
-      <Typography className={classes.smallText}>
-        Enter your email to reset password
-      </Typography>
-      <div className={classes.form}>
-        <div className={classes.formItem}>
+      <Heading text="Forgot Password ?" />
+      <SmallText text="Enter your email to reset password" />
+      <Form.Root>
+        <Form.Item>
           <Input
             type="email"
             name="email"
@@ -90,21 +67,19 @@ export default function Login(props) {
             }}
             error={errors.email && "Something"}
           />
-        </div>
-        <div className={classes.formItem}>
+        </Form.Item>
+        <Form.Item>
           <Button
             type="submit"
             onClick={onSubmit}
             disabled={loading}
-            text={loading ? "Loading..." : "Submit"}
+            text={loading ? <Loader.Progress /> : "SUBMIT"}
           />
-        </div>
-        <div className={classes.formItem}>
-          <Link to="/" className={classes.smallText}>
-            Or Login
-          </Link>
-        </div>
-      </div>
+        </Form.Item>
+        <Form.Item>
+          <SmallText text="Or Login Now" to="/" />
+        </Form.Item>
+      </Form.Root>
     </div>
   );
 }

@@ -1,52 +1,37 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 
 import LockIcon from "@material-ui/icons/Lock";
 import PersonIcon from "@material-ui/icons/Person";
 
+import API from "../globals/API";
+import Constants from "../globals/Constants";
 import * as actionTypes from "../store/actions/actionTypes";
+
+import Form from "../components/Form";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Loader from "../components/Loader";
+import Heading from "../components/Heading";
+import SmallText from "../components/SmallText";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    minWidth: "100vw",
-    minHeight: "100vh",
-    alignItems: "center",
-    flexDirection: "column",
-    backgroundSize: "cover",
-    justifyContent: "center",
-    backgroundColor: "#f5f7fb",
-    backgroundPosition: "center",
-  },
-  header: {
-    fontSize: 26,
-    marginBottom: 40,
-    fontWeight: "bold",
-    color: theme.palette.primary.main,
-  },
-  form: {
-    width: 280,
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  formItem: {
-    width: "100%",
-    margin: "10px 0",
-  },
-  smallText: {
-    fontSize: 10,
-    margin: "5px 0",
-    textDecoration: "none",
-    color: theme.palette.primary.main,
-  },
-}));
+const useStyles = makeStyles((theme) => {
+  console.log(theme);
+  return {
+    root: {
+      display: "flex",
+      minWidth: "100vw",
+      minHeight: "100vh",
+      alignItems: "center",
+      flexDirection: "column",
+      backgroundSize: "cover",
+      justifyContent: "center",
+      backgroundColor: "#f5f7fb",
+      backgroundPosition: "center",
+    },
+  };
+});
 
 export default function Login(props) {
   const dispatch = useDispatch();
@@ -69,11 +54,18 @@ export default function Login(props) {
         setErrors({ ...errors, password: true });
       } else {
         setLoading(true);
-        setLoading(false);
+        const data = await API({
+          method: "POST",
+          uri: Constants.LOGIN,
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+          }),
+        });
         dispatch({
           type: actionTypes.LOGIN,
-          user: "user",
-          token: "token",
+          user: data.user,
+          token: data.token,
         });
       }
     } catch (err) {
@@ -83,9 +75,9 @@ export default function Login(props) {
 
   return (
     <div className={classes.root}>
-      <Typography className={classes.header}>Login to your account</Typography>
-      <div className={classes.form}>
-        <div className={classes.formItem}>
+      <Heading text="Login to your account" />
+      <Form.Root>
+        <Form.Item>
           <Input
             type="email"
             name="email"
@@ -104,8 +96,8 @@ export default function Login(props) {
           >
             <PersonIcon />
           </Input>
-        </div>
-        <div className={classes.formItem}>
+        </Form.Item>
+        <Form.Item>
           <Input
             type="password"
             name="password"
@@ -123,25 +115,20 @@ export default function Login(props) {
           >
             <LockIcon />
           </Input>
-        </div>
-        <div className={classes.formItem}>
+        </Form.Item>
+        <Form.ButtonContainer>
           <Button
             type="submit"
             onClick={onSubmit}
             disabled={loading}
-            text={loading ? "Loading..." : "Login"}
+            text={loading ? <Loader.Progress /> : "LOGIN"}
           />
-        </div>
-        <div className={classes.formItem}>
-          <Link to="/register" className={classes.smallText}>
-            Don't have an account ? Register !
-          </Link>
-          <br />
-          <Link to="/password-forgot" className={classes.smallText}>
-            Forgot Password ?
-          </Link>
-        </div>
-      </div>
+        </Form.ButtonContainer>
+        <Form.Item>
+          <SmallText to="/register" text="Don't have an account ? Register !" />
+          <SmallText to="/password-forgot" text="Forgot Password ?" />
+        </Form.Item>
+      </Form.Root>
     </div>
   );
 }
