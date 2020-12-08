@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import API from "../globals/API";
-import Constants from "../globals/Constants";
-import * as actionTypes from "../store/actions/actionTypes";
+import GLOBALS from "../globals";
+import Loader from "../components/Loader";
 
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import PasswordForgot from "../pages/PasswordForgot";
+import LandingPage from "../pages/LandingPage";
+
+// Auth
+import Login from "../pages/Auth/Login";
+import Register from "../pages/Auth/Register";
+import ResetPassword from "../pages/Auth/ResetPassword";
 
 // User
 import Profile from "../pages/User/Profile";
 
-import Loader from "../components/Loader";
-
-const Main = () => {
+export default function Main() {
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -32,12 +32,13 @@ const Main = () => {
         setLoading(false);
         return;
       }
-      const data = await API({
-        uri: Constants.GET_PROFILE,
+
+      const data = await GLOBALS.API({
+        uri: GLOBALS.Constants.GET_PROFILE,
         token: token,
       });
       dispatch({
-        type: actionTypes.LOGIN,
+        type: GLOBALS.ActionTypes.LOGIN,
         user: data.user,
         token: token,
       });
@@ -48,21 +49,23 @@ const Main = () => {
     }
   };
 
-  return loading ? (
-    <Loader.CenterProgress />
-  ) : store.auth ? (
-    <Switch>
-      <Route exact path="/" component={Profile} />
-      <Redirect from="*" to="/" />
-    </Switch>
-  ) : (
-    <Switch>
-      <Route exact path="/" component={Login} />
-      <Route exact path="/register" component={Register} />
-      <Route exact path="/password-forgot" component={PasswordForgot} />
-      <Redirect from="*" to="/" />
-    </Switch>
+  return (
+    <>
+      {store.loading && <Loader.AbsoluteLinear />}
+      {loading ? (
+        <Loader.CenterProgress />
+      ) : (
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+          {/* Auth */}
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/reset-password" component={ResetPassword} />
+          {/* User */}
+          {store.auth && <Route exact path="/profile" component={Profile} />}
+          <Redirect from="*" to="/" />
+        </Switch>
+      )}
+    </>
   );
-};
-
-export default Main;
+}

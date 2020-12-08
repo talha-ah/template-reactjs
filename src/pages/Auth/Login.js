@@ -5,33 +5,28 @@ import { makeStyles } from "@material-ui/core/styles";
 import LockIcon from "@material-ui/icons/Lock";
 import PersonIcon from "@material-ui/icons/Person";
 
-import API from "../globals/API";
-import Constants from "../globals/Constants";
-import * as actionTypes from "../store/actions/actionTypes";
+import GLOBALS from "../../globals";
 
-import Form from "../components/Form";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import Loader from "../components/Loader";
-import Heading from "../components/Heading";
-import SmallText from "../components/SmallText";
+import Form from "../../components/Form";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import Loader from "../../components/Loader";
+import Heading from "../../components/Heading";
+import SmallText from "../../components/SmallText";
 
-const useStyles = makeStyles((theme) => {
-  console.log(theme);
-  return {
-    root: {
-      display: "flex",
-      minWidth: "100vw",
-      minHeight: "100vh",
-      alignItems: "center",
-      flexDirection: "column",
-      backgroundSize: "cover",
-      justifyContent: "center",
-      backgroundColor: "#f5f7fb",
-      backgroundPosition: "center",
-    },
-  };
-});
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    minWidth: "100vw",
+    minHeight: "100vh",
+    alignItems: "center",
+    flexDirection: "column",
+    backgroundSize: "cover",
+    justifyContent: "center",
+    backgroundColor: "#f5f7fb",
+    backgroundPosition: "center",
+  },
+}));
 
 export default function Login(props) {
   const dispatch = useDispatch();
@@ -54,16 +49,16 @@ export default function Login(props) {
         setErrors({ ...errors, password: true });
       } else {
         setLoading(true);
-        const data = await API({
+        const data = await GLOBALS.API({
           method: "POST",
-          uri: Constants.LOGIN,
+          uri: GLOBALS.Constants.LOGIN,
           body: JSON.stringify({
             email: values.email,
             password: values.password,
           }),
         });
         dispatch({
-          type: actionTypes.LOGIN,
+          type: GLOBALS.ActionTypes.LOGIN,
           user: data.user,
           token: data.token,
         });

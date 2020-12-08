@@ -1,12 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Form from "../components/Form";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import Loader from "../components/Loader";
-import Heading from "../components/Heading";
-import SmallText from "../components/SmallText";
+import Form from "../../components/Form";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import Loader from "../../components/Loader";
+import Heading from "../../components/Heading";
+import SmallText from "../../components/SmallText";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PasswordForgot(props) {
+export default function ResetPassword(props) {
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
   const [values, setValues] = React.useState({

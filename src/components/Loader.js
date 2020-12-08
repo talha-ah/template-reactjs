@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
     display: "grid",
     placeItems: "center",
   },
+  absoluteLinear: {
+    position: "absolute",
+    top: 0,
+    width: "100vw",
+  },
 }));
 
 const Progress = (props) => {
@@ -44,9 +49,20 @@ const CenterProgress = (props) => {
   );
 };
 
+const AbsoluteLinear = (props) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.absoluteLinear}>
+      <LinearProgress color={props.color || "secondary"} />
+    </div>
+  );
+};
+
 let obj = {
   Progress,
   CenterProgress,
+  AbsoluteLinear,
 };
 
 export default obj;

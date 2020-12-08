@@ -1,15 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Form from "../components/Form";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import Loader from "../components/Loader";
-import Heading from "../components/Heading";
-import SmallText from "../components/SmallText";
+import Form from "../../components/Form";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import Loader from "../../components/Loader";
+import Heading from "../../components/Heading";
+import SmallText from "../../components/SmallText";
 
-import API from "../globals/API";
-import Constants from "../globals/Constants";
+import GLOBALS from "../../globals";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,9 +60,9 @@ export default function Register(props) {
         setErrors({ ...errors, confirmPassword: true });
       } else {
         setLoading(true);
-        await API({
+        await GLOBALS.API({
           method: "POST",
-          uri: Constants.REGISTER,
+          uri: GLOBALS.Constants.REGISTER,
           body: JSON.stringify({
             firstName: values.firstName,
             lastName: values.lastName,

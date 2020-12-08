@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import Heading from "../../components/Heading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Profile = (props) => {
+export default function Profile(props) {
   const classes = useStyles();
 
   return (
@@ -31,6 +32,4 @@ const Profile = (props) => {
       <Footer />
     </div>
   );
-};
-
-export default Profile;
+}
