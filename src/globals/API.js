@@ -31,3 +31,23 @@ const api = ({ method = "GET", uri, body, headers, token }) =>
   });
 
 export default api;
+
+// export default class ApiCalls {
+//   static createGetRequest = async url => {
+//     let authToken = await AsyncStorage.getAuthToken();
+
+//     let response = await axios
+//       .get(
+//         Constants.BaseUrl + url,
+//         authToken != '' && {
+//           headers: {
+//             Authorization: `Bearer ${authToken}`,
+//           },
+//         },
+//       )
+//       .catch(err => {
+//         return err;
+//       });
+
+//     return response;
+//   };
