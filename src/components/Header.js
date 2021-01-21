@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSnackbar } from "notistack";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import List from "@material-ui/core/List";
@@ -13,6 +14,7 @@ import ListItem from "@material-ui/core/ListItem";
 import MenuItem from "@material-ui/core/MenuItem";
 import Container from "@material-ui/core/Container";
 
+import GLOBALS from "../globals";
 import Logo from "../assets/images/Logo.svg";
 import SmallText from "../components/SmallText";
 import ProfileImage from "../assets/images/Profile.jpg";
@@ -81,8 +83,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login(props) {
-  const dispatch = useDispatch();
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const store = useSelector((state) => state);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -170,7 +173,12 @@ export default function Login(props) {
                     Profile
                   </MenuItem>
                   <MenuItem
-                    onClick={() => dispatch({ type: actionTypes.LOGOUT })}
+                    onClick={() => {
+                      enqueueSnackbar(GLOBALS.Texts.logoutSuccess, {
+                        variant: "success",
+                      });
+                      dispatch({ type: actionTypes.LOGOUT });
+                    }}
                   >
                     Logout
                   </MenuItem>

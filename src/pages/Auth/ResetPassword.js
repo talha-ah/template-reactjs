@@ -1,9 +1,11 @@
 import React from "react";
 import { Formik } from "formik";
+import { useSnackbar } from "notistack";
 import PersonIcon from "@material-ui/icons/Person";
 import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
 
+import GLOBALS from "../../globals";
 import Form from "../../components/Form";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -24,11 +26,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const forgotYup = Yup.object().shape({
-  email: Yup.string().email("Email is invalid!").required("Required"),
+  email: Yup.string()
+    .email(GLOBALS.Texts.emailInvalid)
+    .required(GLOBALS.Texts.required),
 });
 
 export default function ResetPassword(props) {
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = (values, { setSubmitting }) => {
     try {
@@ -44,6 +49,7 @@ export default function ResetPassword(props) {
       setTimeout(() => {
         console.log(values);
         setSubmitting(false);
+        enqueueSnackbar(GLOBALS.Texts.emailSentSuccess, { variant: "success" });
         props.history.replace("/login");
       }, 2000);
     } catch (err) {
@@ -55,8 +61,8 @@ export default function ResetPassword(props) {
     <Header>
       <div className={classes.root}>
         <Heading
-          primary="Forgot Password?"
-          secondary="Enter your email to reset password"
+          primary={GLOBALS.Texts.forgotPasswordHeaderPrimary}
+          secondary={GLOBALS.Texts.forgotPasswordHeaderSecondary}
         />
         <Formik
           initialValues={{ email: "" }}
@@ -80,19 +86,21 @@ export default function ResetPassword(props) {
                   value={values.email}
                   error={errors.email}
                   onChange={handleChange}
-                  placeholder="E-mail address"
                   startAdornment={<PersonIcon />}
+                  placeholder={GLOBALS.Texts.emailPlaceholder}
                 />
               </Form.Item>
               <Form.ButtonContainer>
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  text={isSubmitting ? <Loader.Progress /> : "SUBMIT"}
+                  text={
+                    isSubmitting ? <Loader.Progress /> : GLOBALS.Texts.submit
+                  }
                 />
               </Form.ButtonContainer>
               <Form.Row>
-                <SmallText primary="Or Login Now" to="/login" />
+                <SmallText primary={GLOBALS.Texts.orLogin} to="/login" />
               </Form.Row>
             </Form.Form>
           )}

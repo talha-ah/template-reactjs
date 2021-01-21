@@ -1,9 +1,10 @@
 import React from "react";
 import { Formik } from "formik";
+import { useSnackbar } from "notistack";
 import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
 
-// import GLOBALS from "../../globals";
+import GLOBALS from "../../globals";
 import Form from "../../components/Form";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -24,19 +25,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const registerYup = Yup.object().shape({
-  firstName: Yup.string().required("Required"),
-  lastName: Yup.string().required("Required"),
-  email: Yup.string().email("Email is invalid!").required("Required"),
-  password: Yup.string().min(6, "Password is invalid!").required("Required"),
-  date: Yup.date().required("Required"),
+  firstName: Yup.string().required(GLOBALS.Texts.required),
+  lastName: Yup.string().required(GLOBALS.Texts.required),
+  email: Yup.string()
+    .email(GLOBALS.Texts.emailInvalid)
+    .required(GLOBALS.Texts.required),
+  password: Yup.string()
+    .min(6, GLOBALS.Texts.passwordInvalid)
+    .required(GLOBALS.Texts.required),
+  date: Yup.date().required(GLOBALS.Texts.required),
   confirmPassword: Yup.string().oneOf(
     [Yup.ref("password"), null],
-    "Passwords must match",
+    GLOBALS.Texts.passwordNotMatched,
   ),
 });
 
 export default function Register(props) {
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = (values, { setSubmitting }) => {
     try {
@@ -52,8 +58,9 @@ export default function Register(props) {
       //   }),
       // });
       setTimeout(() => {
+        console.log(values);
         setSubmitting(false);
-        alert("Registration was successful!");
+        enqueueSnackbar(GLOBALS.Texts.registerSuccess, { variant: "success" });
         // props.history.replace("/");
       }, 2000);
     } catch (err) {
@@ -64,7 +71,7 @@ export default function Register(props) {
   return (
     <Header>
       <div className={classes.root}>
-        <Heading primary="Register your account" />
+        <Heading primary={GLOBALS.Texts.registerHeaderPrimary} />
         <Formik
           initialValues={{
             firstName: "Talha",
@@ -93,9 +100,9 @@ export default function Register(props) {
                     name="firstName"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="First Name"
                     value={values.firstName}
                     error={errors.firstName}
+                    placeholder={GLOBALS.Texts.firstNamePlaceholder}
                   />
                 </Form.RowItem>
                 <Form.RowItem>
@@ -104,9 +111,9 @@ export default function Register(props) {
                     name="lastName"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Last Name"
                     value={values.lastName}
                     error={errors.lastName}
+                    placeholder={GLOBALS.Texts.lastNamePlaceholder}
                   />
                 </Form.RowItem>
               </Form.Row>
@@ -118,7 +125,7 @@ export default function Register(props) {
                   value={values.email}
                   error={errors.email}
                   onChange={handleChange}
-                  placeholder="E-Mail Address"
+                  placeholder={GLOBALS.Texts.emailPlaceholder}
                 />
               </Form.Item>
               <Form.Item>
@@ -128,8 +135,8 @@ export default function Register(props) {
                   value={values.date}
                   error={errors.date}
                   onChange={handleChange}
-                  placeholder="Data of Birth"
                   onFocus={(e) => (e.target.type = "date")}
+                  placeholder={GLOBALS.Texts.dateOfBirthPlaceholder}
                   onBlur={(e) => {
                     if (e.target.value === "") {
                       e.target.type = "text";
@@ -142,10 +149,10 @@ export default function Register(props) {
                   type="password"
                   name="password"
                   onBlur={handleBlur}
-                  placeholder="Password"
                   value={values.password}
                   onChange={handleChange}
                   error={errors.password}
+                  placeholder={GLOBALS.Texts.passwordPlaceholder}
                 />
               </Form.Item>
               <Form.Item>
@@ -154,23 +161,22 @@ export default function Register(props) {
                   onBlur={handleBlur}
                   name="confirmPassword"
                   onChange={handleChange}
-                  placeholder="Confirm Password"
                   value={values.confirmPassword}
                   error={errors.confirmPassword}
+                  placeholder={GLOBALS.Texts.confirmPasswordPlaceholder}
                 />
               </Form.Item>
               <Form.ButtonContainer>
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  text={isSubmitting ? <Loader.Progress /> : "REGISTER"}
+                  text={
+                    isSubmitting ? <Loader.Progress /> : GLOBALS.Texts.register
+                  }
                 />
               </Form.ButtonContainer>
               <Form.Row>
-                <SmallText
-                  primary="Already have an account? Login Now"
-                  to="/login"
-                />
+                <SmallText primary={GLOBALS.Texts.orLogin} to="/login" />
               </Form.Row>
             </Form.Form>
           )}

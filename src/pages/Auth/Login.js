@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
+import { useSnackbar } from "notistack";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import * as Yup from "yup";
@@ -27,13 +28,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const loginYup = Yup.object().shape({
-  email: Yup.string().email("Email is invalid!").required("Required"),
-  password: Yup.string().min(6, "Password is invalid!").required("Required"),
+  email: Yup.string()
+    .email(GLOBALS.Texts.emailInvalid)
+    .required(GLOBALS.Texts.required),
+  password: Yup.string()
+    .min(6, GLOBALS.Texts.passwordInvalid)
+    .required(GLOBALS.Texts.required),
 });
 
 export default function Login(props) {
-  const dispatch = useDispatch();
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = (values, { setSubmitting }) => {
     try {
@@ -49,6 +55,7 @@ export default function Login(props) {
       setTimeout(() => {
         console.log(values);
         setSubmitting(false);
+        enqueueSnackbar(GLOBALS.Texts.loginSuccess, { variant: "success" });
         dispatch({
           type: GLOBALS.ActionTypes.LOGIN,
           user: "data.user",
@@ -63,7 +70,7 @@ export default function Login(props) {
   return (
     <Header>
       <div className={classes.root}>
-        <Heading primary="Login to your account" />
+        <Heading primary={GLOBALS.Texts.loginHeaderPrimary} />
         <Formik
           initialValues={{ email: "test@user.com", password: "password12" }}
           validationSchema={loginYup}
@@ -86,8 +93,8 @@ export default function Login(props) {
                   value={values.email}
                   error={errors.email}
                   onChange={handleChange}
-                  placeholder="E-mail address"
                   startAdornment={<PersonIcon />}
+                  placeholder={GLOBALS.Texts.emailPlaceholder}
                 />
               </Form.Item>
               <Form.Item>
@@ -95,23 +102,31 @@ export default function Login(props) {
                   type="password"
                   name="password"
                   onBlur={handleBlur}
-                  placeholder="Password"
                   value={values.password}
                   onChange={handleChange}
                   error={errors.password}
                   startAdornment={<LockIcon />}
+                  placeholder={GLOBALS.Texts.passwordPlaceholder}
                 />
               </Form.Item>
               <Form.ButtonContainer>
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  text={isSubmitting ? <Loader.Progress /> : "LOGIN"}
+                  text={
+                    isSubmitting ? <Loader.Progress /> : GLOBALS.Texts.login
+                  }
                 />
               </Form.ButtonContainer>
               <Form.Row>
-                <SmallText primary="Forgot Password ?" to="/password-forgot" />
-                <SmallText primary="Don't have an account?" to="/register" />
+                <SmallText
+                  primary={GLOBALS.Texts.forgotPassword}
+                  to="/password-forgot"
+                />
+                <SmallText
+                  primary={GLOBALS.Texts.dontHaveAccount}
+                  to="/register"
+                />
               </Form.Row>
             </Form.Form>
           )}

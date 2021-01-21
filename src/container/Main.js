@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import GLOBALS from "../globals";
 import Loader from "../components/Loader";
@@ -33,14 +33,14 @@ export default function Main() {
         return;
       }
 
-      const data = await GLOBALS.API({
-        uri: GLOBALS.Constants.GET_PROFILE,
-        token: token,
-      });
+      // const data = await GLOBALS.API({
+      //   uri: GLOBALS.Constants.GET_PROFILE,
+      //   token: token,
+      // });
       dispatch({
         type: GLOBALS.ActionTypes.LOGIN,
-        user: data.user,
-        token: token,
+        user: "data.user",
+        token: "token",
       });
       setLoading(false);
     } catch (err) {
