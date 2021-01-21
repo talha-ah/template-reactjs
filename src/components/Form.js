@@ -35,6 +35,15 @@ const Root = (props) => {
 
   return <div className={classes.form}>{props.children}</div>;
 };
+const Form = (props) => {
+  const classes = useStyles();
+
+  return (
+    <form className={classes.form} onSubmit={props.onSubmit}>
+      {props.children}
+    </form>
+  );
+};
 
 const Item = (props) => {
   const classes = useStyles();
@@ -59,6 +68,7 @@ const ButtonContainer = (props) => {
 
 const items = {
   Root,
+  Form,
   Item,
   Row,
   RowItem,

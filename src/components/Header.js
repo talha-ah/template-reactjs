@@ -20,8 +20,14 @@ import * as actionTypes from "../store/actions/actionTypes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: "#f5f7fb",
+  },
+  header: {
     height: 64,
-    backgroundColor: "#fff",
+  },
+  content: {
+    width: "100vw",
+    height: "calc(100vh - 64px)",
   },
   toolBar: {
     margin: 0,
@@ -30,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: theme.palette.common.white,
   },
   nav: {
     flex: 1,
@@ -97,89 +102,94 @@ export default function Login(props) {
 
   return (
     <div className={classes.root}>
-      <Container maxWidth="lg">
-        <Toolbar className={classes.toolBar}>
-          <Hidden smDown>
-            <SmallText
-              to="/"
-              primary={<img src={Logo} className={classes.logo} alt="Logo" />}
-            />
-            <nav className={classes.nav}>
-              <SmallText to="/product" primary="Product" />
-              <SmallText to="/pricing" primary="Pricing" />
-              <SmallText to="/contacts" primary="Contacts" />
-              <SmallText to="/team" primary=" Team" />
-            </nav>
-          </Hidden>
-          <Hidden mdUp>
-            <MenuIcon onClick={toggleDrawer} style={{ cursor: "pointer" }} />
-            <Drawer anchor={"left"} open={drawer} onClose={toggleDrawer}>
-              <div
-                className={classes.drawer}
-                role="presentation"
-                onClick={toggleDrawer}
-                onKeyDown={toggleDrawer}
-              >
-                <div className={classes.logoDrawerContainer}>
-                  <Link to="/">
-                    <img src={Logo} className={classes.logo} alt="Logo" />
-                  </Link>
-                </div>
-                <List>
-                  {["Product", "Pricing", "Contacts", "Team"].map((text) => (
-                    <ListItem key={text}>
-                      <Link
-                        className={classes.link}
-                        to={`/${text.toLowerCase()}`}
-                      >
-                        {text}
-                      </Link>
-                    </ListItem>
-                  ))}
-                </List>
-              </div>
-            </Drawer>
-          </Hidden>
-          {store.auth ? (
-            <div>
-              <div className={classes.profile} onClick={handleClick}>
-                <img
-                  src={ProfileImage}
-                  alt="profileImage"
-                  className={classes.profileImage}
-                />
-                <SmallText
-                  bold
-                  primary={store.user.firstName + " " + store.user.lastName}
-                />
-              </div>
-              <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem component={Link} to="/profile">
-                  Profile
-                </MenuItem>
-                <MenuItem component={Link} to="/account">
-                  My account
-                </MenuItem>
-                <MenuItem
-                  onClick={() => dispatch({ type: actionTypes.LOGOUT })}
+      <div className={classes.header}>
+        <Container maxWidth="lg">
+          <Toolbar className={classes.toolBar}>
+            <Hidden smDown>
+              <SmallText
+                to="/"
+                primary={<img src={Logo} className={classes.logo} alt="Logo" />}
+              />
+              <nav className={classes.nav}>
+                <SmallText to="/product" primary="Product" />
+                <SmallText to="/pricing" primary="Pricing" />
+                <SmallText to="/contacts" primary="Contacts" />
+                <SmallText to="/team" primary=" Team" />
+              </nav>
+            </Hidden>
+            <Hidden mdUp>
+              <MenuIcon onClick={toggleDrawer} style={{ cursor: "pointer" }} />
+              <Drawer anchor={"left"} open={drawer} onClose={toggleDrawer}>
+                <div
+                  className={classes.drawer}
+                  role="presentation"
+                  onClick={toggleDrawer}
+                  onKeyDown={toggleDrawer}
                 >
-                  Logout
-                </MenuItem>
-              </Menu>
-            </div>
-          ) : (
-            <Button component={Link} to="/login">
-              Login
-            </Button>
-          )}
-        </Toolbar>
-      </Container>
+                  <div className={classes.logoDrawerContainer}>
+                    <Link to="/">
+                      <img src={Logo} className={classes.logo} alt="Logo" />
+                    </Link>
+                  </div>
+                  <List>
+                    {["Product", "Pricing", "Contacts", "Team"].map((text) => (
+                      <ListItem key={text}>
+                        <Link
+                          className={classes.link}
+                          to={`/${text.toLowerCase()}`}
+                        >
+                          {text}
+                        </Link>
+                      </ListItem>
+                    ))}
+                  </List>
+                </div>
+              </Drawer>
+            </Hidden>
+            {store.auth ? (
+              <div>
+                <div className={classes.profile} onClick={handleClick}>
+                  <img
+                    src={ProfileImage}
+                    alt="profileImage"
+                    className={classes.profileImage}
+                  />
+                  <SmallText
+                    bold
+                    primary={store.user.firstName + " " + store.user.lastName}
+                  />
+                </div>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem component={Link} to="/profile">
+                    Profile
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => dispatch({ type: actionTypes.LOGOUT })}
+                  >
+                    Logout
+                  </MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              <>
+                <Button component={Link} to="/login">
+                  Login
+                </Button>
+                <Button component={Link} to="/register">
+                  Register
+                </Button>
+              </>
+            )}
+          </Toolbar>
+        </Container>
+      </div>
+      <div className={classes.content}>{props.children}</div>
     </div>
   );
 }

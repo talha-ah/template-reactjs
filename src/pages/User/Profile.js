@@ -7,16 +7,12 @@ import Heading from "../../components/Heading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
-    backgroundColor: theme.palette.common.white,
-  },
-  content: {
+    width: "100%",
+    height: "100%",
     display: "flex",
-    padding: "20px 10px",
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-between",
-    height: "calc(100vh - 64px - 64px)",
   },
 }));
 
@@ -24,12 +20,11 @@ export default function Profile(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Header />
-      <div className={classes.content}>
-        <Heading primary="Main Page" />
+    <Header>
+      <div className={classes.root}>
+        <Heading primary="Profile" />
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </Header>
   );
 }

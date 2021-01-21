@@ -27,10 +27,10 @@ export default function Login(props) {
   return (
     <div className={classes.root}>
       <nav className={classes.nav}>
-        <SmallText to="/product" text="Product" />
-        <SmallText to="/pricing" text="Pricing" />
-        <SmallText to="/contacts" text="Contacts" />
-        <SmallText to="/team" text=" Team" />
+        <SmallText to="/product" primary="Product" />
+        <SmallText to="/pricing" primary="Pricing" />
+        <SmallText to="/contacts" primary="Contacts" />
+        <SmallText to="/team" primary=" Team" />
       </nav>
     </div>
   );
