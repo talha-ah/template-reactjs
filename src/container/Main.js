@@ -57,10 +57,13 @@ export default function Main() {
       ) : (
         <Switch>
           <Route exact path="/" component={LandingPage} />
-          {/* Auth */}
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/reset-password" component={ResetPassword} />
+          {/* Un-Authenticated */}
+          {!store.auth && <Route exact path="/login" component={Login} />}
+          {!store.auth && <Route exact path="/register" component={Register} />}
+          {!store.auth && (
+            <Route exact path="/password-forgot" component={ResetPassword} />
+          )}
+          {/* Authenticated */}
           {/* User */}
           {store.auth && <Route exact path="/profile" component={Profile} />}
           <Redirect from="*" to="/" />

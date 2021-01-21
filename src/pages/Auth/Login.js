@@ -1,12 +1,10 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
-
 import LockIcon from "@material-ui/icons/Lock";
 import PersonIcon from "@material-ui/icons/Person";
+// import { useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 
-import GLOBALS from "../../globals";
-
+// import GLOBALS from "../../globals";
 import Form from "../../components/Form";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -29,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login(props) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
   const [values, setValues] = React.useState({
@@ -49,19 +47,22 @@ export default function Login(props) {
         setErrors({ ...errors, password: true });
       } else {
         setLoading(true);
-        const data = await GLOBALS.API({
-          method: "POST",
-          uri: GLOBALS.Constants.LOGIN,
-          body: JSON.stringify({
-            email: values.email,
-            password: values.password,
-          }),
-        });
-        dispatch({
-          type: GLOBALS.ActionTypes.LOGIN,
-          user: data.user,
-          token: data.token,
-        });
+        // const data = await GLOBALS.API({
+        //   method: "POST",
+        //   uri: GLOBALS.Constants.LOGIN,
+        //   body: JSON.stringify({
+        //     email: values.email,
+        //     password: values.password,
+        //   }),
+        // });
+        // dispatch({
+        //   type: GLOBALS.ActionTypes.LOGIN,
+        //   user: data.user,
+        //   token: data.token,
+        // });
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
       }
     } catch (err) {
       setLoading(false);
@@ -70,7 +71,7 @@ export default function Login(props) {
 
   return (
     <div className={classes.root}>
-      <Heading text="Login to your account" />
+      <Heading primary="Login to your account" />
       <Form.Root>
         <Form.Item>
           <Input
@@ -78,6 +79,8 @@ export default function Login(props) {
             name="email"
             value={values.email}
             placeholder="E-mail address"
+            startAdornment={<PersonIcon />}
+            error={errors.email && "Email is invalid!"}
             onChange={(event) => {
               const re = /^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/;
               if (!re.test(String(event.target.value).toLowerCase())) {
@@ -87,10 +90,7 @@ export default function Login(props) {
               }
               setValues({ ...values, email: event.target.value });
             }}
-            error={errors.email && "Something"}
-          >
-            <PersonIcon />
-          </Input>
+          />
         </Form.Item>
         <Form.Item>
           <Input
@@ -98,6 +98,8 @@ export default function Login(props) {
             name="password"
             placeholder="Password"
             value={values.password}
+            startAdornment={<LockIcon />}
+            error={errors.password && "Password is invalid!"}
             onChange={(event) => {
               if (event.target.value.length < 8) {
                 setErrors({ ...errors, password: true });
@@ -106,10 +108,7 @@ export default function Login(props) {
               }
               setValues({ ...values, password: event.target.value });
             }}
-            error={errors.password && "Something"}
-          >
-            <LockIcon />
-          </Input>
+          />
         </Form.Item>
         <Form.ButtonContainer>
           <Button
@@ -120,8 +119,11 @@ export default function Login(props) {
           />
         </Form.ButtonContainer>
         <Form.Item>
-          <SmallText to="/register" text="Don't have an account ? Register !" />
-          <SmallText to="/password-forgot" text="Forgot Password ?" />
+          <SmallText
+            to="/register"
+            primary="Don't have an account ? Register !"
+          />
+          <SmallText to="/password-forgot" primary="Forgot Password ?" />
         </Form.Item>
       </Form.Root>
     </div>

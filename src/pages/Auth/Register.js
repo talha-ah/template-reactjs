@@ -60,19 +60,22 @@ export default function Register(props) {
         setErrors({ ...errors, confirmPassword: true });
       } else {
         setLoading(true);
-        await GLOBALS.API({
-          method: "POST",
-          uri: GLOBALS.Constants.REGISTER,
-          body: JSON.stringify({
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-            dob: values.date,
-            password: values.password,
-          }),
-        });
-        alert("Registration was successful!");
-        props.history.replace("/");
+        // await GLOBALS.API({
+        //   method: "POST",
+        //   uri: GLOBALS.Constants.REGISTER,
+        //   body: JSON.stringify({
+        //     firstName: values.firstName,
+        //     lastName: values.lastName,
+        //     email: values.email,
+        //     dob: values.date,
+        //     password: values.password,
+        //   }),
+        // });
+        setTimeout(() => {
+          setLoading(false);
+          alert("Registration was successful!");
+          props.history.replace("/");
+        }, 3000);
       }
     } catch (err) {
       setLoading(false);
@@ -81,7 +84,7 @@ export default function Register(props) {
 
   return (
     <div className={classes.root}>
-      <Heading text="Register your account" />
+      <Heading primary="Register your account" />
       <Form.Root>
         <Form.Row>
           <Form.RowItem>
@@ -203,7 +206,7 @@ export default function Register(props) {
           />
         </Form.ButtonContainer>
         <Form.Item>
-          <SmallText text="Already have an account? Login Now" to="/" />
+          <SmallText primary="Already have an account? Login Now" to="/login" />
         </Form.Item>
       </Form.Root>
     </div>

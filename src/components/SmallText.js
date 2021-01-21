@@ -9,8 +9,8 @@ export default function Login(props) {
       fontSize: 13,
       margin: "5px 0",
       textDecoration: "none",
+      color: theme.palette.common.black,
       fontWeight: props.bold ? "bold" : "normal",
-      color: theme.palette.primary.contrastText,
     },
   }));
   const classes = useStyles();
@@ -23,14 +23,14 @@ export default function Login(props) {
           className={classes.text + " " + props.className}
           style={props.style}
         >
-          {props.text}
+          {props.primary}
         </Link>
       ) : (
         <Typography
           className={classes.text + " " + props.className}
           style={props.style}
         >
-          {props.text}
+          {props.primary}
         </Typography>
       )}
     </div>

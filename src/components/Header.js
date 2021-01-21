@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Drawer from "@material-ui/core/Drawer";
+import { useDispatch, useSelector } from "react-redux";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Toolbar from "@material-ui/core/Toolbar";
 import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
+import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import MenuIcon from "@material-ui/icons/Menu";
-
-import * as actionTypes from "../store/actions/actionTypes";
+import Toolbar from "@material-ui/core/Toolbar";
+import ListItem from "@material-ui/core/ListItem";
+import MenuItem from "@material-ui/core/MenuItem";
+import Container from "@material-ui/core/Container";
 
 import Logo from "../assets/images/Logo.svg";
-import ProfileImage from "../assets/images/Profile.jpg";
 import SmallText from "../components/SmallText";
+import ProfileImage from "../assets/images/Profile.jpg";
+import * as actionTypes from "../store/actions/actionTypes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -97,18 +97,18 @@ export default function Login(props) {
 
   return (
     <div className={classes.root}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Toolbar className={classes.toolBar}>
           <Hidden smDown>
             <SmallText
               to="/"
-              text={<img src={Logo} className={classes.logo} alt="Logo" />}
+              primary={<img src={Logo} className={classes.logo} alt="Logo" />}
             />
             <nav className={classes.nav}>
-              <SmallText to="/product" text="Product" />
-              <SmallText to="/pricing" text="Pricing" />
-              <SmallText to="/contacts" text="Contacts" />
-              <SmallText to="/team" text=" Team" />
+              <SmallText to="/product" primary="Product" />
+              <SmallText to="/pricing" primary="Pricing" />
+              <SmallText to="/contacts" primary="Contacts" />
+              <SmallText to="/team" primary=" Team" />
             </nav>
           </Hidden>
           <Hidden mdUp>
@@ -140,36 +140,44 @@ export default function Login(props) {
               </div>
             </Drawer>
           </Hidden>
-          <div>
-            <div className={classes.profile} onClick={handleClick}>
-              <img
-                src={ProfileImage}
-                alt="profileImage"
-                className={classes.profileImage}
-              />
-              <SmallText
-                bold
-                text={store.user.firstName + " " + store.user.lastName}
-              />
+          {store.auth ? (
+            <div>
+              <div className={classes.profile} onClick={handleClick}>
+                <img
+                  src={ProfileImage}
+                  alt="profileImage"
+                  className={classes.profileImage}
+                />
+                <SmallText
+                  bold
+                  primary={store.user.firstName + " " + store.user.lastName}
+                />
+              </div>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem component={Link} to="/profile">
+                  Profile
+                </MenuItem>
+                <MenuItem component={Link} to="/account">
+                  My account
+                </MenuItem>
+                <MenuItem
+                  onClick={() => dispatch({ type: actionTypes.LOGOUT })}
+                >
+                  Logout
+                </MenuItem>
+              </Menu>
             </div>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem component={Link} to="/profile">
-                Profile
-              </MenuItem>
-              <MenuItem component={Link} to="/account">
-                My account
-              </MenuItem>
-              <MenuItem onClick={() => dispatch({ type: actionTypes.LOGOUT })}>
-                Logout
-              </MenuItem>
-            </Menu>
-          </div>
+          ) : (
+            <Button component={Link} to="/login">
+              Login
+            </Button>
+          )}
         </Toolbar>
       </Container>
     </div>

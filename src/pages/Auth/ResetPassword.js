@@ -1,4 +1,5 @@
 import React from "react";
+import PersonIcon from "@material-ui/icons/Person";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Form from "../../components/Form";
@@ -47,8 +48,10 @@ export default function ResetPassword(props) {
 
   return (
     <div className={classes.root}>
-      <Heading text="Forgot Password ?" />
-      <SmallText text="Enter your email to reset password" />
+      <Heading
+        primary="Forgot Password?"
+        secondary="Enter your email to reset password"
+      />
       <Form.Root>
         <Form.Item>
           <Input
@@ -56,6 +59,7 @@ export default function ResetPassword(props) {
             name="email"
             value={values.email}
             placeholder="E-mail address"
+            startAdornment={<PersonIcon />}
             onChange={(event) => {
               const re = /^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/;
               if (!re.test(String(event.target.value).toLowerCase())) {
@@ -77,7 +81,7 @@ export default function ResetPassword(props) {
           />
         </Form.Item>
         <Form.Item>
-          <SmallText text="Or Login Now" to="/" />
+          <SmallText primary="Or Login Now" to="/login" />
         </Form.Item>
       </Form.Root>
     </div>

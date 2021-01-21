@@ -27,7 +27,7 @@ export default function Profile(props) {
     <div className={classes.root}>
       <Header />
       <div className={classes.content}>
-        <Heading text="Main Page" />
+        <Heading primary="Main Page" />
       </div>
       <Footer />
     </div>
