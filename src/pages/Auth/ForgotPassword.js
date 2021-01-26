@@ -27,11 +27,11 @@ const useStyles = makeStyles((theme) => ({
 
 const forgotYup = Yup.object().shape({
   email: Yup.string()
-    .email(GLOBALS.Texts.emailInvalid)
-    .required(GLOBALS.Texts.required),
+    .email(GLOBALS.I18n.t("emailInvalid"))
+    .required(GLOBALS.I18n.t("required")),
 });
 
-export default function ResetPassword(props) {
+export default function ForgotPassword(props) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -49,7 +49,9 @@ export default function ResetPassword(props) {
       setTimeout(() => {
         console.log(values);
         setSubmitting(false);
-        enqueueSnackbar(GLOBALS.Texts.emailSentSuccess, { variant: "success" });
+        enqueueSnackbar(GLOBALS.I18n.t("emailSentSuccess"), {
+          variant: "success",
+        });
         props.history.replace("/login");
       }, 2000);
     } catch (err) {
@@ -61,8 +63,8 @@ export default function ResetPassword(props) {
     <Header>
       <div className={classes.root}>
         <Heading
-          primary={GLOBALS.Texts.forgotPasswordHeaderPrimary}
-          secondary={GLOBALS.Texts.forgotPasswordHeaderSecondary}
+          primary={GLOBALS.I18n.t("forgotPasswordHeaderPrimary")}
+          secondary={GLOBALS.I18n.t("forgotPasswordHeaderSecondary")}
         />
         <Formik
           initialValues={{ email: "" }}
@@ -87,7 +89,7 @@ export default function ResetPassword(props) {
                   error={errors.email}
                   onChange={handleChange}
                   startAdornment={<PersonIcon />}
-                  placeholder={GLOBALS.Texts.emailPlaceholder}
+                  placeholder={GLOBALS.I18n.t("emailPlaceholder")}
                 />
               </Form.Item>
               <Form.ButtonContainer>
@@ -95,12 +97,16 @@ export default function ResetPassword(props) {
                   type="submit"
                   disabled={isSubmitting}
                   text={
-                    isSubmitting ? <Loader.Progress /> : GLOBALS.Texts.submit
+                    isSubmitting ? (
+                      <Loader.Progress />
+                    ) : (
+                      GLOBALS.I18n.t("submit")
+                    )
                   }
                 />
               </Form.ButtonContainer>
               <Form.Row>
-                <SmallText primary={GLOBALS.Texts.orLogin} to="/login" />
+                <SmallText primary={GLOBALS.I18n.t("orLogin")} to="/login" />
               </Form.Row>
             </Form.Form>
           )}

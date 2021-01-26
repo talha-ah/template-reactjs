@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
 
 const loginYup = Yup.object().shape({
   email: Yup.string()
-    .email(GLOBALS.Texts.emailInvalid)
-    .required(GLOBALS.Texts.required),
+    .email(GLOBALS.I18n.t("emailInvalid"))
+    .required(GLOBALS.I18n.t("required")),
   password: Yup.string()
-    .min(6, GLOBALS.Texts.passwordInvalid)
-    .required(GLOBALS.Texts.required),
+    .min(6, GLOBALS.I18n.t("passwordInvalid"))
+    .required(GLOBALS.I18n.t("required")),
 });
 
 export default function Login(props) {
@@ -55,7 +55,7 @@ export default function Login(props) {
       setTimeout(() => {
         console.log(values);
         setSubmitting(false);
-        enqueueSnackbar(GLOBALS.Texts.loginSuccess, { variant: "success" });
+        enqueueSnackbar(GLOBALS.I18n.t("loginSuccess"), { variant: "success" });
         dispatch({
           type: GLOBALS.ActionTypes.LOGIN,
           user: "data.user",
@@ -70,7 +70,7 @@ export default function Login(props) {
   return (
     <Header>
       <div className={classes.root}>
-        <Heading primary={GLOBALS.Texts.loginHeaderPrimary} />
+        <Heading primary={GLOBALS.I18n.t("loginHeaderPrimary")} />
         <Formik
           initialValues={{ email: "test@user.com", password: "password12" }}
           validationSchema={loginYup}
@@ -94,7 +94,7 @@ export default function Login(props) {
                   error={errors.email}
                   onChange={handleChange}
                   startAdornment={<PersonIcon />}
-                  placeholder={GLOBALS.Texts.emailPlaceholder}
+                  placeholder={GLOBALS.I18n.t("emailPlaceholder")}
                 />
               </Form.Item>
               <Form.Item>
@@ -106,7 +106,7 @@ export default function Login(props) {
                   onChange={handleChange}
                   error={errors.password}
                   startAdornment={<LockIcon />}
-                  placeholder={GLOBALS.Texts.passwordPlaceholder}
+                  placeholder={GLOBALS.I18n.t("passwordPlaceholder")}
                 />
               </Form.Item>
               <Form.ButtonContainer>
@@ -114,17 +114,17 @@ export default function Login(props) {
                   type="submit"
                   disabled={isSubmitting}
                   text={
-                    isSubmitting ? <Loader.Progress /> : GLOBALS.Texts.login
+                    isSubmitting ? <Loader.Progress /> : GLOBALS.I18n.t("login")
                   }
                 />
               </Form.ButtonContainer>
               <Form.Row>
                 <SmallText
-                  primary={GLOBALS.Texts.forgotPassword}
+                  primary={GLOBALS.I18n.t("forgotPassword")}
                   to="/password-forgot"
                 />
                 <SmallText
-                  primary={GLOBALS.Texts.dontHaveAccount}
+                  primary={GLOBALS.I18n.t("dontHaveAccount")}
                   to="/register"
                 />
               </Form.Row>

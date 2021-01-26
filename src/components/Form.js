@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   form: {
-    width: 350,
+    width: "100%",
+    maxWidth: "350px",
     display: "flex",
     alignItems: "center",
     flexDirection: "column",

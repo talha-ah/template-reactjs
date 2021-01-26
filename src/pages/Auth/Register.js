@@ -25,18 +25,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const registerYup = Yup.object().shape({
-  firstName: Yup.string().required(GLOBALS.Texts.required),
-  lastName: Yup.string().required(GLOBALS.Texts.required),
+  firstName: Yup.string().required(GLOBALS.I18n.t("required")),
+  lastName: Yup.string().required(GLOBALS.I18n.t("required")),
   email: Yup.string()
-    .email(GLOBALS.Texts.emailInvalid)
-    .required(GLOBALS.Texts.required),
+    .email(GLOBALS.I18n.t("emailInvalid"))
+    .required(GLOBALS.I18n.t("required")),
   password: Yup.string()
-    .min(6, GLOBALS.Texts.passwordInvalid)
-    .required(GLOBALS.Texts.required),
-  date: Yup.date().required(GLOBALS.Texts.required),
+    .min(6, GLOBALS.I18n.t("passwordInvalid"))
+    .required(GLOBALS.I18n.t("required")),
+  date: Yup.date().required(GLOBALS.I18n.t("required")),
   confirmPassword: Yup.string().oneOf(
     [Yup.ref("password"), null],
-    GLOBALS.Texts.passwordNotMatched,
+    GLOBALS.I18n.t("passwordNotMatched"),
   ),
 });
 
@@ -60,7 +60,9 @@ export default function Register(props) {
       setTimeout(() => {
         console.log(values);
         setSubmitting(false);
-        enqueueSnackbar(GLOBALS.Texts.registerSuccess, { variant: "success" });
+        enqueueSnackbar(GLOBALS.I18n.t("registerSuccess"), {
+          variant: "success",
+        });
         // props.history.replace("/");
       }, 2000);
     } catch (err) {
@@ -71,7 +73,7 @@ export default function Register(props) {
   return (
     <Header>
       <div className={classes.root}>
-        <Heading primary={GLOBALS.Texts.registerHeaderPrimary} />
+        <Heading primary={GLOBALS.I18n.t("registerHeaderPrimary")} />
         <Formik
           initialValues={{
             firstName: "Talha",
@@ -102,7 +104,7 @@ export default function Register(props) {
                     onChange={handleChange}
                     value={values.firstName}
                     error={errors.firstName}
-                    placeholder={GLOBALS.Texts.firstNamePlaceholder}
+                    placeholder={GLOBALS.I18n.t("firstNamePlaceholder")}
                   />
                 </Form.RowItem>
                 <Form.RowItem>
@@ -113,7 +115,7 @@ export default function Register(props) {
                     onChange={handleChange}
                     value={values.lastName}
                     error={errors.lastName}
-                    placeholder={GLOBALS.Texts.lastNamePlaceholder}
+                    placeholder={GLOBALS.I18n.t("lastNamePlaceholder")}
                   />
                 </Form.RowItem>
               </Form.Row>
@@ -125,7 +127,7 @@ export default function Register(props) {
                   value={values.email}
                   error={errors.email}
                   onChange={handleChange}
-                  placeholder={GLOBALS.Texts.emailPlaceholder}
+                  placeholder={GLOBALS.I18n.t("emailPlaceholder")}
                 />
               </Form.Item>
               <Form.Item>
@@ -136,7 +138,7 @@ export default function Register(props) {
                   error={errors.date}
                   onChange={handleChange}
                   onFocus={(e) => (e.target.type = "date")}
-                  placeholder={GLOBALS.Texts.dateOfBirthPlaceholder}
+                  placeholder={GLOBALS.I18n.t("dateOfBirthPlaceholder")}
                   onBlur={(e) => {
                     if (e.target.value === "") {
                       e.target.type = "text";
@@ -152,7 +154,7 @@ export default function Register(props) {
                   value={values.password}
                   onChange={handleChange}
                   error={errors.password}
-                  placeholder={GLOBALS.Texts.passwordPlaceholder}
+                  placeholder={GLOBALS.I18n.t("passwordPlaceholder")}
                 />
               </Form.Item>
               <Form.Item>
@@ -163,7 +165,7 @@ export default function Register(props) {
                   onChange={handleChange}
                   value={values.confirmPassword}
                   error={errors.confirmPassword}
-                  placeholder={GLOBALS.Texts.confirmPasswordPlaceholder}
+                  placeholder={GLOBALS.I18n.t("confirmPasswordPlaceholder")}
                 />
               </Form.Item>
               <Form.ButtonContainer>
@@ -171,12 +173,16 @@ export default function Register(props) {
                   type="submit"
                   disabled={isSubmitting}
                   text={
-                    isSubmitting ? <Loader.Progress /> : GLOBALS.Texts.register
+                    isSubmitting ? (
+                      <Loader.Progress />
+                    ) : (
+                      GLOBALS.I18n.t("register")
+                    )
                   }
                 />
               </Form.ButtonContainer>
               <Form.Row>
-                <SmallText primary={GLOBALS.Texts.orLogin} to="/login" />
+                <SmallText primary={GLOBALS.I18n.t("orLogin")} to="/login" />
               </Form.Row>
             </Form.Form>
           )}

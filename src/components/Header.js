@@ -174,7 +174,7 @@ export default function Login(props) {
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      enqueueSnackbar(GLOBALS.Texts.logoutSuccess, {
+                      enqueueSnackbar(GLOBALS.I18n.t("logoutSuccess"), {
                         variant: "success",
                       });
                       dispatch({ type: actionTypes.LOGOUT });

@@ -10,7 +10,7 @@ import LandingPage from "../pages/LandingPage";
 // Auth
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-import ResetPassword from "../pages/Auth/ResetPassword";
+import ForgotPassword from "../pages/Auth/ForgotPassword";
 
 // User
 import Profile from "../pages/User/Profile";
@@ -61,7 +61,7 @@ export default function Main() {
           {!store.auth && <Route exact path="/login" component={Login} />}
           {!store.auth && <Route exact path="/register" component={Register} />}
           {!store.auth && (
-            <Route exact path="/password-forgot" component={ResetPassword} />
+            <Route exact path="/password-forgot" component={ForgotPassword} />
           )}
           {/* Authenticated */}
           {/* User */}
